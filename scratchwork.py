@@ -3,15 +3,21 @@ pdf_path = "/Users/juansalas/Documents/JuanSalasScratchwork/Course Section Enrol
      
 
 ##MAIN CODE
-with pdfplumber.open(pdf_path) as pdf:
+
+######## This is assuming PDF only has one page#######
+
+with pdfplumber.open(pdf_path) as pdf: 
     for x, page in enumerate(pdf.pages):
         text = page.extract_text()
 
+######### Makes a list, each item is a different course
 
 course_list = text.splitlines()
 
 print(course_list)
 print(" ")
+
+######## Updates course_list to ONLY be filtered with religion courses
 
 for index, element in enumerate(course_list):
     if course_list[index][0:3] == "REL":          ##LOOKS FOR RELIGION COURSES
@@ -19,14 +25,15 @@ for index, element in enumerate(course_list):
         break
 
 
-del course_list[len(course_list) - 3:len(course_list)] #Deletes office of info whatever
+#in this case, the few last items in course_list were irrelevant information so I deleted it.
 
+del course_list[len(course_list) - 3:len(course_list)] #Deletes office of info whatever
 
 
 print(course_list)
 print(" ")
 print(" ")
-print(" ")
+
 
 print(course_list[1][::-1])
 
@@ -36,83 +43,53 @@ print(" ")
 
 seats = []
 
+course_list_copy = []
+course_list_copy.append(course_list[0]) ##Appends which type of course is in the filtered list (For example 'REL)
+
+for item, value in enumerate(course_list[1:]):
+    course_list_copy.append(value[::-1])
+
+
+print("This is the course list with reversed strings!!")
+print(course_list_copy)
+print("")
+print("Now let's remove the name of the professors to get the seats!")
+
+
+desired_CRN = '2630'
+desired_CRN_index = 0
+
+
+
+#NEXT STEP WOULD BE TO FIND WHAT INDEX IS THE desiredCRN in the regular course_list
+
 for index, course in enumerate(course_list):
-    course_reversed = course[::-1]
+    if course[:4] == desired_CRN:
+        desired_CRN_index = index
+        break
 
-"""
-    for i, ch in enumerate(course_reversed):
-        if ch.isnumeric():
-            seats.append(int(ch))
-        elif ch == "-" and course_reversed[i + 1].isnumeric():
-            seats.append(int(course_reversed[i + 1]) * -1)
-        else:
-            seats.append("X")
+#When you find the index, plug it to the of the course_list_reversed; then removethe professors name and geet number of seats
 
-"""
+seat = 0
+x = course_list_copy[desired_CRN_index]
 
+for index, ch in enumerate(x):
+    if ch.isnumeric() == True and x[index - 1].isalpha() ==  True:
+        seat = int(ch)
+        break
+    elif ch == "-":
+        seat = x[index + 1]
+        seat = int(seat) * -1
+        break
 
+#If number of seats is greater than 0 then send message to user.
 
-## Maybe email Dr. Tobias and see what she thinks? IDKKKKKKKK
-print(seats)
+if seat == 1:
+    print(f"There is {seat} seat available in Course with CRN {desired_CRN}. Register now!!")
+elif seat > 0:
+    print(f"There are {seat} seats available in Course with CRN {desired_CRN}. Register now!!")
+else:
+    print(f"There are no seats available at the moment.")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-print(course_list[1:])
-avail = 0
-y = 0
-
-for course in course_list[1:]: #so it starts at an actual course
-    if course[0:4] == "2630":
-        print("Found course in PDF! Now let's see if there are available seats")
-        #Reverse whole course_string, then delete characters until index finds available seat number, then reverse again
-        print(course)
-        course_seats_only = course[::-1] #reverses course string in the list
-        print(" ")
-        print(course[::-1])
-        print(" ")
-        #Find the integer in string and delete name of professor
-
-        for i, ch in enumerate(course_seats_only):
-            if ch.isalpha() == True or ch == " ":
-                if ch == "-":
-                    y = i
-                    break 
-        
-        course_seats_only = course_seats_only[0:y]
-        course = course_seats_only[::-1] #reverse again
-
-
-    else:
-        print("CRN entered was not found on course list")
-
-    print(" ")
-    print(course)
-
-"""
-##NEXT STEPS
-"""
-1. Remove the names of the professsors from the items of the list so that the ending index of a item is just the seats available
-2. check if course available is greater than 0 then print there are seats available
-
-Further steps:
-see how i can download the pdf every 5 minutes into a public storage.
-
-"""
 
 
