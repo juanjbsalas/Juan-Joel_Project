@@ -1,4 +1,5 @@
 import pdfplumber
+
 pdf_path = "/Users/juansalas/Documents/JuanSalasScratchwork/Course Section Enrollment.pdf"
      
 
@@ -17,15 +18,41 @@ course_list = text.splitlines()
 print(course_list)
 print(" ")
 
+course_abbreviations = [                                        #This list contains the abbreviation for all courses
+    "ACCT", "AAAS", "ANTH", "ARBC", "ARTH", "BIO", "BUS",       # !I have not used this list anywhere yet
+    "CHEM", "CHIN", "COSC", "ECO", "EDUC", "ENGL", "ENVS",
+    "FIN", "FYI", "FREN", "GSP", "GER", "GOV", "HIST", "HUM",
+    "ICS", "INTL", "INTR", "LACS", "LIBA", "MATH", "MLA",
+    "MENA", "MILS", "MLLC", "MUS", "NEUS", "PHIL", "PHED",
+    "PHY", "PSY", "REL", "SOC", "SPAN", "ARTS", "THEA"
+]
+
+
+
+########### Holds the desired subject the user would like to be notified about
+
+desired_subject = input('Which course subject would you like to be notified about? For example, for Religion enter "REL", for Biology enter "BIO", exactly to how it looks on the registration portal.')
+
+
+############ If the length is invalid
+if len(desired_subject) != 3 or len(desired_subject) != 4: #The length is because courses are abbreviated to 3 or 4 characters. Ex: Mathematics (MATH); Religion (REL)
+    print("It seems as if you're desired subject is invalid! Please try again.")
+    desired_subject = input('Which course subject would you like to be notified about? For example, for Religion enter "REL", for Biology enter "BIO", exactly to how it looks on the registration portal.')
+
+
+
 ######## Updates course_list to ONLY be filtered with religion courses
 
+y = len(desired_subject)
+
 for index, element in enumerate(course_list):
-    if course_list[index][0:3] == "REL":          ##LOOKS FOR RELIGION COURSES
+    if course_list[index][0:3] == desired_subject:          ##LOOKS FOR desired_subject COURSES
         del course_list[0:index]                  # Now index 0 contains REL
         break
 
 
 #in this case, the few last items in course_list were irrelevant information so I deleted it.
+
 
 del course_list[len(course_list) - 3:len(course_list)] #Deletes office of info whatever
 
