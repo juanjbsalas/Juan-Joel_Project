@@ -1,22 +1,54 @@
-import pdfplumber
+##IM TRYING THIS WITH PDF LINK
 
-pdf_path = "/Users/juansalas/Documents/JuanSalasScratchwork/Course Section Enrollment.pdf"
+import pdfplumber
+import requests
+
+pdf_url = "https://webs.wofford.edu/webdocs/courseSchedule202502.pdf"
      
 
 ##MAIN CODE
 
 ######## This is assuming PDF only has one page#######
 
-with pdfplumber.open(pdf_path) as pdf: 
-    for x, page in enumerate(pdf.pages):
-        text = page.extract_text()
+output_file = "woffordCourses.pdf"
+
+########## ! This snippet was written with ChatGPT
+try:
+    # Send a GET request to the URL
+    response = requests.get(pdf_url)
+    response.raise_for_status()  # Check if the request was successful
+
+    # Write the content to a file
+    with open(output_file, "wb") as file:
+        file.write(response.content)
+    
+    print(f"PDF downloaded and saved as {output_file}")
+
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
+
+########## ! Ends here 
+text = ""
+
+######### ? Using a dictionary might be more beneficial
+
+with pdfplumber.open(output_file) as pdf: 
+    for i, page in enumerate(pdf.pages):
+        if text == "":
+            text = page.extract_text()
+        else:
+            text = text + page.extract_text()
+
 
 ######### Makes a list, each item is a different course
+
 
 course_list = text.splitlines()
 
 print(course_list)
 print(" ")
+
+# TODO: 
 
 course_abbreviations = [                                        #This list contains the abbreviation for all courses
     "ACCT", "AAAS", "ANTH", "ARBC", "ARTH", "BIO", "BUS",       # !I have not used this list anywhere yet
@@ -31,13 +63,13 @@ course_abbreviations = [                                        #This list conta
 
 ########### Holds the desired subject the user would like to be notified about
 
-desired_subject = input('Which course subject would you like to be notified about? For example, for Religion enter "REL", for Biology enter "BIO", exactly to how it looks on the registration portal.')
+desired_subject = input('Which course subject would you like to be notified about? For example, for Religion enter "REL", for Biology enter "BIO", exactly to how it looks on the registration portal. ')
 
 
 ############ If the length is invalid
 if len(desired_subject) != 3 or len(desired_subject) != 4: #The length is because courses are abbreviated to 3 or 4 characters. Ex: Mathematics (MATH); Religion (REL)
-    print("It seems as if you're desired subject is invalid! Please try again.")
-    desired_subject = input('Which course subject would you like to be notified about? For example, for Religion enter "REL", for Biology enter "BIO", exactly to how it looks on the registration portal.')
+    print("It seems as if you're desired subject is invalid! Please try again. ")
+    desired_subject = input('Which course subject would you like to be notified about? For example, for Religion enter "REL", for Biology enter "BIO", exactly to how it looks on the registration portal. ')
 
 
 
@@ -117,6 +149,7 @@ elif seat > 0:
     print(f"There are {seat} seats available in Course with CRN {desired_CRN}. Register now!!")
 else:
     print(f"There are no seats available at the moment.")
+
 
 
 
