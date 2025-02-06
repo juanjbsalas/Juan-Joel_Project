@@ -8,8 +8,6 @@ pdf_url = "https://webs.wofford.edu/webdocs/courseSchedule202502.pdf"
 
 ##MAIN CODE
 
-######## This is assuming PDF only has one page#######
-
 output_file = "woffordCourses.pdf"
 
 ########## ! This snippet was written with ChatGPT
