@@ -4,6 +4,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+# ! TODO: Figure out code to play every 5 mins.
+
 # Set up Selenium WebDriver
 options = Options()
 options.add_argument("--headless")  # Run in headless mode
@@ -43,7 +45,7 @@ for row in rows:
 
 print("---------------------------------------------------------------------------------------------")
 print("---------------------------------------------------------------------------------------------")
-print(details)
+#print(details)
 
 
 # Close the browser
@@ -51,3 +53,32 @@ driver.quit()
 
 # Print or return the dictionary
 print(course_dict)
+
+# Ask for CRN
+desired_CRN = input('Enter the CRN for the course you would like to be notified about: ')
+confirmation = ""
+
+# Check if course is found, then ask if that is the right course.
+
+
+#! This could definetly be shorter somehow.
+if desired_CRN not in course_dict:
+    desired_CRN = input('It seems as if you entered an invalid CRN, please enter it one more time: ')
+    if desired_CRN in course_dict:
+        confirmation = input(f"Is the course you want to be notified about {course_dict[desired_CRN][0]}? Please type 'Y' for Yes and 'N' for No.")
+        if confirmation == 'Y':
+            print('Sounds good! We will notify you whenever this course has seats!')
+        elif confirmation == 'N':
+            print("Ahhh man, run the programa again later, we'll try to find your course. Make sure to enter the correct CRN.")
+        else:
+            print("Next time, 'Y' for Yes or 'N' for No.")
+    
+    else: print('The CRN you entered does not appear in our system.')
+elif desired_CRN in course_dict:
+    confirmation = input(f"Is the course you want to be notified about {course_dict[desired_CRN][0]}? Please type 'Y' for Yes and 'N' for No.")
+    if confirmation == 'Y':
+        print('Sounds good! We will notify you whenever this course has seats!')
+    elif confirmation == 'N':
+        print("Ahhh man, run the programa again later, we'll try to find your course. Make sure to enter the correct CRN.")
+    else:
+        print("Next time, 'Y' for Yes or 'N' for No.")
