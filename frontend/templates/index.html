@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Tracker</title>
+</head>
+<body>
+    <h1>Track a Course</h1>
+    <form id="trackForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="crn">CRN:</label>
+        <input type="text" id="crn" required>
+
+        <button type="submit">Track Class</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
