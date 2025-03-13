@@ -19,6 +19,21 @@ The **Class Availability Notifier** is a web application designed to help studen
 
 ---
 
+## **Run the Flask Backend**
+
+export PYTHONPATH=$PYTHONPATH:/Users/joelgammah/Desktop/Juan-Joel_Project/
+python3 backend/app.py
+
+---
+
+## **📡 API Endpoints**
+
+Method	Endpoint	Description
+GET	/	Serves index.html (homepage)
+POST	/track	Tracks a course { "email": "example", "crn": "1234" }
+GET	/tracked	Retrieves all tracked CRNs
+
+---
 
 ## **📈 How It Works**
 
@@ -27,6 +42,4 @@ The **Class Availability Notifier** is a web application designed to help studen
 3️⃣ The web scraper continuously checks for seat availability.
 4️⃣ When a seat becomes available, the system will (soon) send an email or SMS.
 
-## **📜 License**
 
-This project is open-source under the MIT License.
