@@ -19,20 +19,49 @@ The **Class Availability Notifier** is a web application designed to help studen
 
 ---
 
-## **Run the Flask Backend**
+## **📂 Project Structure**
+```bash
+Juan-Joel_Project/
+│── backend/             # Flask backend (API and routing)
+│   ├── app.py           # Main Flask application
+│
+│── db/                  # Database storage & operations
+│   ├── db_setup.py      # Initializes SQLite database
+│   ├── db_operations.py # Functions to add/retrieve tracked CRNs
+│   ├── students.db      # SQLite database file
+│
+│── scraper/             # Web scraper to check course availability
+│   ├── scraper.py       # Scrapes university course data
+│
+│── frontend/            # User interface (HTML, CSS, JS)
+│   ├── templates/
+│   │   ├── index.html   # Webpage (form for students)
+│   ├── static/
+│   │   ├── script.js    # Handles form submission & API requests
+│   │   ├── styles.css   # (Optional) Styles for the webpage
+│
+│── README.md            # Project documentation
+│── requirements.txt     # Dependencies (Flask, Selenium, SQLite)
 
+```
+---
+
+## **Run the Flask Backend**
+```bash
 export PYTHONPATH=$PYTHONPATH:/Users/joelgammah/Desktop/Juan-Joel_Project/
 python3 backend/app.py
+
+```
 
 ---
 
 ## **📡 API Endpoints**
-
+```bash
 Method	Endpoint	Description
 GET	/	Serves index.html (homepage)
 POST	/track	Tracks a course { "email": "example", "crn": "1234" }
 GET	/tracked	Retrieves all tracked CRNs
-
+```
 ---
 
 ## **📈 How It Works**
