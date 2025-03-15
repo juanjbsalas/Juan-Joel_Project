@@ -12,17 +12,33 @@ def index():
 
 @app.route("/track", methods=["POST"])
 def track_class():
-    """API to track a course based on email & CRN."""
-    data = request.json
-    email = data.get("email")
-    crn = data.get("crn")
-    phone = data.get("phone", None)
+    """API to track a course based on form submission."""
+    
+    # Extract form data (use .form because it's an HTML form submission)
+    user_firstname = request.form.get("user_firstname")
+    user_lastname = request.form.get("user_lastname")
+    user_personal_email = request.form.get("user_personal_email")
+    user_wofford_email = request.form.get("user_wofford_email")
+    phone_number = request.form.get("phone_number", None)  # Optional
+    user_crn = request.form.get("user_crn")
 
-    if not email or not crn:
-        return jsonify({"error": "Email and CRN are required"}), 400
+    # Basic validation: Ensure required fields are present
+    if not user_personal_email or not user_crn:
+        return jsonify({"error": "Personal email and CRN are required"}), 400
 
-    add_request(email, crn, phone)  # Save to SQLite database
-    return jsonify({"message": f"Tracking request added for {email} - CRN {crn}"}), 201
+    # Save data to database (adjust function accordingly)
+    add_request(
+        firstname=user_firstname,
+        lastname=user_lastname,
+        personal_email=user_personal_email,
+        wofford_email=user_wofford_email,
+        phone=phone_number,
+        crn=user_crn
+    )
+
+    return jsonify({
+        "message": f"Tracking request added for {user_firstname} {user_lastname} ({user_personal_email}) - CRN {user_crn}"
+    }), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
