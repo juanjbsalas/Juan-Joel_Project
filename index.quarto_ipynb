@@ -1,0 +1,45 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"mywebsite\"\n",
+        "---"
+      ],
+      "id": "1e1c7cda"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "user_email = input(\"Please enter your email adress where you would like to be notified: \")\n",
+        "print(f\"You entered: {user_email}\")"
+      ],
+      "id": "9c498260",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "This is a Quarto website.\n",
+        "\n",
+        "To learn more about Quarto websites visit <https://quarto.org/docs/websites>."
+      ],
+      "id": "df836535"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Library/Frameworks/Python.framework/Versions/3.13/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
