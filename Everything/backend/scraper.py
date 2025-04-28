@@ -31,7 +31,7 @@ def scrape_courses():
         columns = row.find_elements(By.TAG_NAME, "td")
         details = [col.text.strip() for col in columns]
 
-        if details and len(details) >= 12:  # Ensure valid row structure
+        if details and len(details) >= 12:  # Ensuring valid row structure
             crn = details[0]  # CRN as the key
             subject = details[1]
             course_number = details[2]
@@ -59,6 +59,7 @@ def monitor_course_availability(course_dict):
     print("Checking for available seats...")
     tracked_crns = get_tracked_crns()  # Get tracked CRNs from database
 
+#! Print or messaging logic?
     for email, crn, phone in tracked_crns:
         if crn in course_dict:
             available_seats = course_dict[crn]["available_seats"]
