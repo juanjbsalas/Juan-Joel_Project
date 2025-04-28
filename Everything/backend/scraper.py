@@ -6,6 +6,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 from db.db_operations import get_tracked_crns  # Import function to get tracked CRNs
 
+#? What is get_tracked_crn()??? I think it is the user input.
+
 # Constants
 URL = "https://connect.wofford.edu/myWofford/registrar/courseSchedule.aspx"
 WAIT_TIME = 60  # Scraper runs every 1 minutes

@@ -1,5 +1,10 @@
-#Construct email and sending messages logic here.
+#Importing scraper functions
+from scraper import setup_driver
+from scraper import scrape_courses
+from scraper import monitor_course_availability
 
+
+#Construct email and sending messages logic here.
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
