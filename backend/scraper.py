@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from backend.notifier import send_email
-from tracking import watchlist
+from backend.tracking import watchlist
 
 
 # Constants

@@ -1,18 +1,15 @@
 import time
 from flask import Flask, request, render_template
 import threading
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend')))
-from tracking import watchlist
-from scraper import monitor_course_availability, scrape_courses
-from notifier import send_email
+
+
+from backend.tracking import watchlist
+from backend.scraper import monitor_course_availability, scrape_courses
+from backend.notifier import send_email
 
 
 app = Flask(__name__)
 
-# We'll keep a list of user watch requests
-watchlist = []
 
 @app.route('/', methods=['GET', 'POST'])
 
@@ -37,6 +34,12 @@ def background_running_scraper():
         time.sleep(120) #Checking data every 2 minutes
 
 
-if __name__ == "__main__":
+
+def run():
     threading.Thread(target=background_running_scraper, daemon=True).start()
     app.run(debug=True)
+
+
+if __name__ == "__main__":
+    run()
+
