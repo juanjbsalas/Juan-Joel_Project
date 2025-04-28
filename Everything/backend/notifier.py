@@ -27,4 +27,4 @@ def send_email(recipient_email, subject, body):
         server.sendmail(sender_email, recipient_email, message.as_string())
 
 # Example usage:
-send_email("jbsalas05@gmail.com", "Seats Available!", "Quick! Your class now has open seats!")
+#send_email("jbsalas05@gmail.com", "Seats Available!", "Quick! Your class now has open seats!")

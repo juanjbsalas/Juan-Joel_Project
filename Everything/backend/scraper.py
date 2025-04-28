@@ -3,10 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-import time
-from db.db_operations import get_tracked_crns  # Import function to get tracked CRNs
+from backend.notifier import send_email
+from tracking import watchlist
 
-#? What is get_tracked_crn()??? I think it is the user input.
 
 # Constants
 URL = "https://connect.wofford.edu/myWofford/registrar/courseSchedule.aspx"
@@ -59,19 +58,19 @@ def scrape_courses():
 # Function to monitor course availability
 def monitor_course_availability(course_dict):
     print("Checking for available seats...")
-    tracked_crns = get_tracked_crns()  # Get tracked CRNs from database
 
-#! Print or messaging logic?
-    for email, crn, phone in tracked_crns:
+    for request in watchlist:
+        crn = request['course_CRN']
+        email = request['email']
+
         if crn in course_dict:
             available_seats = course_dict[crn]["available_seats"]
             if available_seats > 0:
-                print(f"🚀 ALERT: {email}, CRN {crn} now has {available_seats} seat(s) available! Register now!")
-                # TODO: Add email/SMS notification logic here
+                print(f"🚀 ALERT: {email}, CRN {crn} now has {available_seats} seat(s) available!")
+                send_email(email, "Seats Available!", f"Quick! {crn} now has {available_seats} seats available!")
             else:
-                print(f"No seats available for {course_dict[crn]['title']} (CRN: {crn}). Checking again in {WAIT_TIME // 60} minutes...")
+                print(f"No seats available for {course_dict[crn]['title']} (CRN: {crn}). Checking again soon...")
 
-    time.sleep(WAIT_TIME)  # Wait before checking again
 
 # Main Execution
 if __name__ == "__main__":
