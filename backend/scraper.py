@@ -56,25 +56,19 @@ def scrape_courses():
     return course_dict
 
 # Function to monitor course availability
-def monitor_course_availability(course_dict):
+def monitor_course_availability(xyn): #The parameter would be a dictionary
     print("Checking for available seats...")
 
     for request in watchlist:
         crn = request['course_CRN']
         email = request['email']
 
-        if crn in course_dict:
-            available_seats = course_dict[crn]["available_seats"]
+        if crn in xyn:
+            available_seats = xyn[crn]["available_seats"]
             if available_seats > 0:
                 print(f"🚀 ALERT: {email}, CRN {crn} now has {available_seats} seat(s) available!")
                 send_email(email, "Seats Available!", f"Quick! {crn} now has {available_seats} seats available!")
             else:
-                print(f"No seats available for {course_dict[crn]['title']} (CRN: {crn}). Checking again soon...")
+                print(f"No seats available for {xyn[crn]['title']} (CRN: {crn}). Checking again soon...")
 
 
-# Main Execution
-if __name__ == "__main__":
-    while True:
-        print("Fetching course data...")
-        course_data = scrape_courses()
-        monitor_course_availability(course_data)

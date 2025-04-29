@@ -27,19 +27,14 @@ def index():
         </form>
     '''
 
+
 def background_running_scraper():
     while True:
-        course_data = scrape_courses
+        course_data = scrape_courses()  #This returns the course dictionary
         monitor_course_availability(course_data)
         time.sleep(120) #Checking data every 2 minutes
 
 
-
-def run():
+if __name__ == "__main__" or __name__ == "frontend.app":
     threading.Thread(target=background_running_scraper, daemon=True).start()
     app.run(debug=True)
-
-
-if __name__ == "__main__":
-    run()
-
