@@ -9,13 +9,12 @@ from backend.tracking import watchlist
 
 # Constants
 URL = "https://connect.wofford.edu/myWofford/registrar/courseSchedule.aspx"
-WAIT_TIME = 60  # Scraper runs every 1 minutes
 
 # Function to set up Selenium WebDriver
-def setup_driver():
-    options = Options()
-    options.add_argument("--headless")  # Run in headless mode
-    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+#def setup_driver():
+#    options = Options()
+#    options.add_argument("--headless")  # Run in headless mode
+#    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # Function to scrape course data
 def scrape_courses():
@@ -32,7 +31,7 @@ def scrape_courses():
         columns = row.find_elements(By.TAG_NAME, "td")
         details = [col.text.strip() for col in columns]
 
-        if details and len(details) >= 12:  # Ensuring valid row structure
+        if details and len(details) >= 12:  # Ensures valid row structure
             crn = details[0]  # CRN as the key
             subject = details[1]
             course_number = details[2]
@@ -71,4 +70,10 @@ def monitor_course_availability(xyn): #The parameter would be a dictionary
             else:
                 print(f"No seats available for {xyn[crn]['title']} (CRN: {crn}). Checking again soon...")
 
+
+def background_running_scraper():
+    while True:
+        course_data = scrape_courses()  #This returns the course dictionary
+        monitor_course_availability(course_data)
+        time.sleep(120) #Checking data every 2 minutes
 
