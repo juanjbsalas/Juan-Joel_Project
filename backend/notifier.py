@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 
 def send_email(recipient_email, subject, body):
     sender_email = "jbsalas05@gmail.com"
-    sender_password = "vacu hxyc apjn jaii"
+    sender_password = ""
 
     # Create the email
     message = MIMEMultipart()
